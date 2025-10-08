@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Explore how President Donald Trump's tariffs may affect UK inflation, including potential economic slowdowns, changes in monetary policy, and trade dynamics. Learn about the broader impact on the UK economy and inflation forecasts.">
+  <meta name="author" content="Wais Ahmad Alizai">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impact of Trump’s Tariffs on UK Inflation</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="js/uikit-3.15.14/css/uikit.min.css">
+  <script src="js/uikit-3.15.14/js/uikit.min.js"></script>
+
+  <script src="js/d3.v7.min.js"></script>
+  <script src="js/echarts.min.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      font-style: normal;
+      background-color: #ffffff;
+      color: #000000;
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    h4 {
+      font-size: 16px;
+      color: #666;
+      margin-top: 0;
+      margin-bottom: 30px;
+    }
+
+    h3, h4 {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .axis text {
+      font-family: sans-serif;
+      font-size: 11px;
+    }
+
+    .tick line {
+      visibility: visible;
+    }
+
+    .line {
+      fill: none;
+      stroke-width: 3;
+    }
+
+    .us-line {
+      stroke: #1380A1; 
+    }
+
+    .uk-line {
+      stroke: #FAAB18; 
+    }
+
+    .axis_label {
+      font-family: sans-serif;
+      font-size: 14px;
+    }
+
+    .legend {
+      font-size: 13px;
+      fill: #333;
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: black;
+      shape-rendering: crispEdges;
+    }
+
+    /* Social buttons */
+    .social-buttons a {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-size: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .social-buttons a.facebook {
+      background-color: #3b5998;
+    }
+
+    .social-buttons a.twitter {
+      background-color: black; 
+    }
+
+    .social-buttons a.linkedin {
+      background-color: #0077b5;
+    }
+
+    .social-buttons a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      opacity: 0.9;
+    }
+
+    .chart {
+      width: 80%;
+      margin: auto;
+      height: 900px;
+    }
+
+    .axis-label {
+      font-size: 14px;
+    }
+
+    .interest-rate {
+      stroke: #FF5733;  
+    }
+
+    .inflation {
+      stroke: #33B5FF;  
+    }
+
+    #chart2 svg, #chart3 svg {
+      display: block;
+      margin-bottom: 0;
+    }
+
+    #chart2 + p, #chart3 + p {
+      margin-top: 4px; 
+    }
+  </style>
+</head>
+
+<body>
+  <div class="uk-cover-container">
+    <canvas></canvas>
+    <img src="trump1.png" alt="Created by Adobe Express, Adobe Firefly " uk-cover>
+  </div>
+
+  <div class="uk-container uk-width-1-2@m uk-margin-top">
+    <h1 class="uk-text-bold .uk-heading-medium uk-margin-small-bottom">How will Trump trade wars fuel inflation globally?</h1>
+    <p class="uk-text-normal">US President Donald Trump has imposed 10% baseline tariffs on imports from all countries, undermining efforts to reboot economic growth and combat inflation globally.</p>
+
+    <div class="uk-inline uk-margin">
+      <img src="trump-2.jpg" alt="President Donald Trump signing executive orders. Image Credit: SHEALAH CRAIGHEAD" class="uk-responsive-width uk-thumbnail">
+      <div class="uk-caption uk-position-bottom uk-overlay uk-overlay-default">
+        <p>President Donald Trump signing executive orders. Image Credit: SHEALAH CRAIGHEAD</p>
+      </div>
+    </div>
+
+    <div class="byline-container">
+      <p class="intro_byline Roboto">
+        By <strong>Wais Ahmad Alizai  </strong> 9 April 2025
+      </p>
+    </div>
+
+    <div class="social-buttons">
+      <a href="https://www.facebook.com/wais.ahmad.5" class="facebook" title="Facebook" target="_blank">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://x.com/w_a_alizai" class="twitter" title="X" target="_blank">
+        <i class="fab fa-x-twitter"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/waisahmadalizai" class="linkedin" title="LinkedIn" target="_blank">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+
+    <p>Trump has so far not shown any signs of retreating from his policy of levying high tariffs on almost all the US trade partners. If his tit-for-tat tariffs continue with China, most direct trade ties between two economic powers will likely come to an end. </p> 
+    
+    <p> Yet, Trump is not steadfast when it comes to tariffs as his administration has excluded “smartphones and other consumer electronics from its steep ‘reciprocal’ tariffs in a significant boost for Big Tech.” </p>
+
+    <p> Meanwhile, <a class="uk-link" href="https://www.theguardian.com/business/2025/mar/17/donald-trump-trade-wars-global-growth-inflation-oecd-uk-tariffs"> a report by the Guardian newspaper quoted </a> Organisation for Economic Co-operation and Development (OECD) – which represents the richest countries – as saying that the fallout from higher trade barriers and mounting geopolitical uncertainty were undermining the recent higher levels of economic growth and progress to bring down inflation.</p>
+
+    <p>The OECD’s warning sent an alarm that tariffs can trigger more tit-for-tat measures which may push up prices for consumers globally </p> 
+    
+    <p> Although President Trump levied the lowest tariffs on the UK compared to other countries, British Secretary of State for Business and Trade Jonathan Reynolds <a class="uk-link" href="https://www.reuters.com/world/uk/looser-food-standards-off-menu-any-us-uk-trade-deal-uk-says-2025-04-13/">said</a> that he still viewed the greater trade barriers as "disappointing".</p>
+
+        
+    <div id="chart1" style="width:100%; max-width:900px; height:400px; margin:0 auto;"></div>
+      
+
+       <p> However, <a class="uk-link" href="https://www.lse.ac.uk/granthaminstitute/wp-content/uploads/2024/10/Economic-impacts-of-the-Trump-Tariff-Proposals-on-Europe.pdf"> some economists believe </a> that tariffs may support specific domestic industries in the short term, but they usually end up in higher prices for consumers. </p>
+       
+       <p> It is said that when the US sneezes, the entire world catches cold. The baseline tariff and more importantly, 25% tariffs will have <a class="uk-link" href="https://www.ft.com/content/ba16a417-40b5-4751-bac1-b2f3916c4eca?desktop=true&segmentId=7c8f09b9-9b61-4fbb-9430-9208a9e233c8#myft:notification:daily-email:content"> significant and severe impacts </a> on luxury cars. If governments, especially the British government, does not step in, staff at UK high-end car plants will lose jobs. 
+
+        <h2 class="uk-text-bold .uk-heading-medium uk-margin-small-bottom"> Tariffs would increase UK-made car prices </h2>
+
+       <p> The UK Department for Business and Trade said <a class="uk-link" href="https://assets.publishing.service.gov.uk/media/67eea12f9eae202448299cc6/united-states-trade-and-investment-factsheet-2025-04-07.pdf"> in a factsheet </a> that the total UK exports to US amounted to £182.6 billion in the four quarters to the end of Q3 2024, with the total UK imports from US amounting to £111.5 billion over the same period. </p>
+       
+       <p> “Total UK exports to United States amounted to £182.6 billion in the four quarters to the end of Q3 2024 (a decrease of 0.5% or £889 million in current prices, compared to the four quarters to the end of Q3 2023)”, said the factsheet. </p>
+        
+      <p> As the tariffs are in the beginning stage, it is still uncertain to what extent, it would increase the UK-made cars' prices. But in fact, high-end cars are in the top five UK exports to the US. The automotive industry meanwhile warned of facing economic problems and price increases if the British government does not offer <a class="uk-link" href="https://www.ft.com/content/ba16a417-40b5-4751-bac1-b2f3916c4eca?desktop=true&segmentId=7c8f09b9-9b61-4fbb-9430-9208a9e233c8#myft:notification:daily-email:content"> financial assistance such as furlough schemes </a>. 
+      
+        <div id="chart2" style="width:100%; max-width:800px; height:300px; margin:0 auto;"></div>
+        <div id="chart3" style="width:100%; max-width:800px; height:300px; margin:0 auto;"></div>
+                
+
+      <p> Moreover, the Financial Times <a class="uk-link" href="https://www.ft.com/content/30cfc290-be22-4a31-a42a-d006ff7a8a7d?desktop=true&segmentId=7c8f09b9-9b61-4fbb-9430-9208a9e233c8#myft:notification:daily-email:content"> wrote in an article </a> that those who look to buy a luxury car face paying thousands more as the global tariff war drives up the cost of prestigious vehicles. </p>
+      
+      <p> “The concern for luxury-car enthusiasts in the UK and worldwide is that a Rolls-Royce or an Aston Martin could soon become far more expensive to buy if the global trade war is not brought to an end,” said the article. </p>
+
+      <p> Also, the article quoted Scott Sherwood, an independent analyst of supercars and luxury car brands, as saying that prices of high-end marques will rise for consumers outside of the US since car manufacturers will try to spread the financial hit across their entire market and customer base.
+      </p>
+      
+      <h2 class="uk-text-bold .uk-heading-medium uk-margin-small-bottom"> Bank of England increases interest rates to decrease inflation </h2>
+
+      <p> As the inflation rate is above the 2% target, the Bank of England has increased the interest rates to 5.25% to help lower inflation. </p>
+      
+      
+      <p> A BBC report described the 5.25% increase as “a 16-year high”, arguing that if you make borrowing more expensive, people have less money to spend and more importantly, people are encouraged to save more. As a result, this decreases the demand for goods and slows price rises, according to the report. </p>
+      
+      <div id="chart" style="width:100%; max-width:1000px; height:500px; margin:0 auto;"></div>
+     
+
+ <p> Moreover, the Bank of England has halved its growth forecast for this year as it cut interest rates from 4.75% to 4.5% - the lowest level for more than 18 months, said another BBC report published on 6 February. </p>
+
+ <div class="uk-inline uk-margin">
+  <img src="Bank_of_England.png" alt="Bank of England. Image Credit: Wais Ahmad Alizai" class="uk-responsive-width uk-thumbnail">
+  <div class="uk-caption uk-position-bottom uk-overlay uk-overlay-default">
+    <p>Bank of England. Image Credit: Wais Ahmad Alizai</p>
+  </div>
+</div>
+
+  <p> Amid the cut in the interest rates, the economy is now expected to grow by 0.75% from its previous estimate of 1.5%.
+Indirectly pointing to Trump’s trade wars, Governor of the Bank of England Andrew Bailey told BBC that the bank expected to be able to cut rates further, “but we will have to judge meeting by meeting, how far and how fast.” </p>
+
+<p> "We live in an uncertain world, and the road ahead will have bumps on it," the BBC report quoted him as adding. </p>
+
+<h2 class="uk-text-bold .uk-heading-medium uk-margin-small-bottom"> What happens next?</h2>
+
+<p> The US tariffs will carry implications for the UK. US consumers would shift from buying UK-made products to domestic ones, as a result of which it will have negative impacts on the UK economy and will increase inflation. </p>
+
+<p> “US consumers and firms switching spending from UK goods, reducing demand for UK exports and weighing on UK activity and inflation,” said House of Lords Library. </p>
+
+<p> However, there is a scenario if the US keeps levying tariffs on countries, firms will move their investments to the UK in order to be in a better position to export to the US when it comes to tariffs. </p>
+
+<p> The House of Lords Library further said: “If higher US tariffs are implemented and maintained for some time, firms in countries facing high reciprocal tariffs may relocate business activities to the UK to be better placed to export to the US. So the UK may see more foreign investment as a consequence.” </p>
+
+<p> But the drawback is that the tariffs have arisen concerns that Europe, including UK, may turn into a place for China to dump its cheapest products. </p>
+
+<p> Currys chief executive Alex Baldock told <a class="uk-link" href="https://www.ft.com/content/a974376b-83d4-4ca5-b545-fad0df31bd21"> the Financial Times </a> that there were early signs of “stock being diverted into European markets in a straightforward dumping way”. 
+
+  <footer style="background-color: white; color: #333; font-family: Georgia, serif; padding: 40px 20px; border-top: 1px solid #ccc;">
+
+    <div style="max-width: 900px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
+      <div style="flex: 1 1 200px;">
+        <h4 style="margin-bottom: 10px;">About the Author</h4>
+        <p style="margin: 5px 0;">Wais Ahmad Alizai - Student at Goldsmiths</p>
+        <p style="margin: 5px 0;">&copy; <span id="year"></span> All rights reserved.</p>
+        <a href="mailto:wais.ahmad.alizai@gmail.com" style="color: #333; text-decoration: underline;">wais.ahmad.alizai@gmail.com</a>
+      </div>
+
+      <div style="flex: 1 1 200px;">
+        <h4 style="margin-bottom: 10px;">Credits and Sources</h4>
+        <ul style="list-style: none; padding: 0; line-height: 1.6;">
+          <li>Charts created using D3</li>
+          <li>All sources are hyperlinked within the piece</li>
+        </ul>
+      </div>
+  
+    </div>
+  
+    <hr style="margin: 30px auto; width: 80%; border-color: whitesmoke;">
+  
+  </footer>
+
+</div>
+
+  <script type="text/javascript"> </script>
+    
+    <script>
+let margin = { top: 30, right: 80, bottom: 50, left: 60 };
+
+d3.csv("data/inflation.csv").then(function(data) {
+  const parseDate = d3.timeParse("%b '%y");
+
+  data.forEach(d => {
+    d.Date = parseDate(d.Date.trim());
+    d.US = +d.US;
+    d.UK = +d.UK;
+  });
+
+
+  drawInteractiveChart(data);
+
+
+  window.addEventListener("resize", () => drawInteractiveChart(data));
+});
+
+function drawInteractiveChart(data) {
+  const container = d3.select("#chart1");
+  container.selectAll("*").remove();  
+
+  const height = container.node().clientHeight;
+  const width = container.node().clientWidth;
+
+  const svg = container.append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .style("display", "block")
+    .style("margin", "0 auto");
+
+  const xScale = d3.scaleTime()
+    .domain(d3.extent(data, d => d.Date))
+    .range([margin.left, width - margin.right]);
+
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(data, d => Math.max(d.US, d.UK))])
+    .nice()
+    .range([height - margin.bottom, margin.top]);
+
+  const color = { US: "#1380A1", UK: "#FAAB18" };
+
+  const line = country => d3.line()
+    .x(d => xScale(d.Date))
+    .y(d => yScale(d[country]));
+
+  ["US", "UK"].forEach(country => {
+    svg.append("path")
+      .datum(data)
+      .attr("id", `line-${country}`)
+      .attr("fill", "none")
+      .attr("stroke", color[country])
+      .attr("stroke-width", 3.5)
+      .attr("d", line(country));
+  });
+
+ 
+  svg.append("g")
+    .attr("transform", `translate(0,${height - margin.bottom})`)
+    .call(d3.axisBottom(xScale).ticks(d3.timeYear.every(1)).tickFormat(d3.timeFormat("%Y")))
+    .selectAll("text")
+    .style("text-anchor", "middle");
+
+  
+  svg.append("g")
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(yScale).tickFormat(d => d + "%"));
+
+  
+  svg.append("g")
+    .attr("class", "y-grid")
+    .selectAll("line")
+    .data(yScale.ticks(8))
+    .enter().append("line")
+    .attr("x1", margin.left)
+    .attr("x2", width - margin.right)
+    .attr("y1", d => yScale(d))
+    .attr("y2", d => yScale(d))
+    .attr("stroke", "#ddd")
+    .attr("stroke-width", 1)
+    .attr("stroke-opacity", 0.6);
+
+  
+  const tooltip = container.append("div")
+    .style("position", "absolute")
+    .style("background", "#fff")
+    .style("border", "1px solid #ccc")
+    .style("padding", "6px 12px")
+    .style("pointer-events", "none")
+    .style("opacity", 0)
+    .style("font", "12px sans-serif");
+
+  const focusCircles = svg.append("g").style("display", "none");
+
+  ["US", "UK"].forEach(country => {
+    focusCircles.append("circle")
+      .attr("r", 4)
+      .attr("fill", color[country])
+      .attr("id", `circle-${country}`);
+  });
+
+  
+  svg.append("rect")
+    .attr("fill", "none")
+    .attr("pointer-events", "all")
+    .attr("width", width)
+    .attr("height", height)
+    .on("mouseover", () => {
+      tooltip.style("opacity", 1);
+      focusCircles.style("display", null);
+    })
+    .on("mouseout", () => {
+      tooltip.style("opacity", 0);
+      focusCircles.style("display", "none");
+    })
+    .on("mousemove", function(event) {
+      const [mx] = d3.pointer(event);
+      const date = xScale.invert(mx);
+      const bisect = d3.bisector(d => d.Date).left;
+      const i = bisect(data, date);
+      const d0 = data[i - 1], d1 = data[i] || d0;
+      const d = date - d0.Date > d1.Date - date ? d1 : d0;
+
+      ["US", "UK"].forEach(country => {
+        focusCircles.select(`#circle-${country}`)
+          .attr("cx", xScale(d.Date))
+          .attr("cy", yScale(d[country]));
+      });
+
+      tooltip
+        .html(`
+          <strong>${d3.timeFormat("%b %Y")(d.Date)}</strong><br/>
+          US: ${d.US}%<br/>
+          UK: ${d.UK}%
+        `)
+        .style("left", (event.pageX + 15) + "px")
+        .style("top", (event.pageY - 28) + "px");
+    });
+
+  
+  const visibility = { US: true, UK: true };
+
+  const legend = svg.selectAll(".legend")
+    .data(["US", "UK"])
+    .enter().append("g")
+    .attr("class", "legend")
+    .style("cursor", "pointer")
+    .attr("transform", (d, i) => `translate(${width - margin.right - 100},${margin.top + i * 20})`)
+    .on("click", function(event, d) {
+      visibility[d] = !visibility[d];
+
+      svg.select(`#line-${d}`)
+        .transition()
+        .duration(500)
+        .style("opacity", visibility[d] ? 1 : 0);
+
+      focusCircles.select(`#circle-${d}`)
+        .style("opacity", visibility[d] ? 1 : 0);
+
+      d3.select(this).select("text")
+        .style("fill-opacity", visibility[d] ? 1 : 0.3);
+    });
+
+  legend.append("rect")
+    .attr("width", 12)
+    .attr("height", 12)
+    .attr("fill", d => color[d]);
+
+  legend.append("text")
+    .attr("x", 18)
+    .attr("y", 10)
+    .style("font", "12px sans-serif")
+    .text(d => d);
+
+  
+  svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", 20)
+    .attr("text-anchor", "middle")
+    .style("font-size", Math.max(12, Math.min(20, width / 30)) + "px")
+    .style("font-weight", "bold")
+    .text("Interactive: Consumer price inflation in US and UK");
+
+  
+  svg.append("text")
+    .attr("x", margin.left)
+    .attr("y", height - 5)
+    .attr("text-anchor", "start")
+    .style("font-size", "12px")
+    .style("fill", "black")
+    .text("Data Sources: The Office for National Statistics (ONS), Statista");
+}
+</script>
+
+<script>
+  let exportsData;
+  
+  d3.csv("data/exports.csv").then(function(data) {
+      data.forEach(d => d.Value = +d.Value);
+      exportsData = data;
+      drawExportsChart(exportsData);
+  });
+  
+  function drawExportsChart(data) {
+      const container = d3.select("#chart2");
+      container.selectAll("*").remove();
+  
+      const width = container.node().clientWidth;
+      const barHeight = 30;
+      const margin = { top: 50, right: 80, bottom: 50, left: 160 };
+      const innerHeight = data.length * barHeight;
+      const height = innerHeight + margin.top + margin.bottom;
+  
+      const svg = container.append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .style("display", "block")
+          .style("margin", "0 auto");
+  
+      const chartGroup = svg.append("g")
+          .attr("transform", `translate(${margin.left}, ${margin.top})`);
+  
+      const xScale = d3.scaleLinear()
+          .domain([0, d3.max(data, d => d.Value)])
+          .range([0, width - margin.left - margin.right]);
+  
+      const yScale = d3.scaleBand()
+          .domain(data.map(d => d.Category))
+          .range([0, innerHeight])
+          .padding(0.2);
+  
+      chartGroup.selectAll(".bar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr("y", d => yScale(d.Category))
+          .attr("height", yScale.bandwidth())
+          .attr("x", 0)
+          .attr("width", d => xScale(d.Value))
+          .attr("fill", "steelblue");
+  
+      chartGroup.selectAll(".value")
+          .data(data)
+          .enter()
+          .append("text")
+          .attr("y", d => yScale(d.Category) + yScale.bandwidth() / 2 + 5)
+          .attr("x", d => xScale(d.Value) + 8)
+          .text(d => d.Value)
+          .style("font-size", "12px");
+  
+      chartGroup.append("g").call(d3.axisLeft(yScale));
+      chartGroup.append("g")
+          .attr("transform", `translate(0, ${innerHeight})`)
+          .call(d3.axisBottom(xScale).ticks(5));
+  
+      svg.append("text")
+          .attr("x", width / 2)
+          .attr("y", 25)
+          .attr("text-anchor", "middle")
+          .style("font-size", Math.max(12, Math.min(21, width / 40)) + "px")
+          .style("font-weight", "bold")
+          .text("The top 5 UK goods exports to US");
+  
+          svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", height - 20)
+    .attr("text-anchor", "right")
+    .style("font-size", Math.max(10, Math.min(12, width / 70)) + "px")
+    .style("fill", "black")
+    .text("£ Billions");
+  
+          svg.append("text")
+          .attr("x", width / 2)              
+          .attr("y", height - 5)            
+          .attr("text-anchor", "right")     
+          .style("font-size", Math.max(10, Math.min(12, width / 70)) + "px")  
+          .style("fill", "black")
+          .text("Data Source: The Office for National Statistics (ONS)");
+  }
+  
+ 
+  window.addEventListener("resize", () => {
+      if (exportsData) drawExportsChart(exportsData);
+  });
+  </script>
+
+<script>
+  let importsData;
+  
+  d3.csv("data/imports.csv").then(function(data) {
+      data.forEach(d => d.Value = +d.Value);
+      importsData = data;
+      drawImportsChart(importsData);
+  });
+  
+  function drawImportsChart(data) {
+      const container = d3.select("#chart3");
+      container.selectAll("*").remove(); 
+  
+      const width = container.node().clientWidth;
+      const barHeight = 30;
+      const margin = { top: 50, right: 80, bottom: 50, left: 160 };
+      const innerHeight = data.length * barHeight;
+      const height = innerHeight + margin.top + margin.bottom;
+  
+      const svg = container.append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .style("display", "block")
+          .style("margin", "0 auto");
+  
+      const chartGroup = svg.append("g")
+          .attr("transform", `translate(${margin.left}, ${margin.top})`);
+  
+      const xScale = d3.scaleLinear()
+          .domain([0, d3.max(data, d => d.Value)])
+          .range([0, width - margin.left - margin.right]);
+  
+      const yScale = d3.scaleBand()
+          .domain(data.map(d => d.Category))
+          .range([0, innerHeight])
+          .padding(0.2);
+  
+      chartGroup.selectAll(".bar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr("y", d => yScale(d.Category))
+          .attr("height", yScale.bandwidth())
+          .attr("x", 0)
+          .attr("width", d => xScale(d.Value))
+          .attr("fill", "steelblue");
+  
+      chartGroup.selectAll(".value")
+          .data(data)
+          .enter()
+          .append("text")
+          .attr("y", d => yScale(d.Category) + yScale.bandwidth() / 2 + 5)
+          .attr("x", d => xScale(d.Value) + 8)
+          .text(d => d.Value)
+          .style("font-size", "12px");
+  
+      chartGroup.append("g").call(d3.axisLeft(yScale));
+      chartGroup.append("g")
+          .attr("transform", `translate(0, ${innerHeight})`)
+          .call(d3.axisBottom(xScale).ticks(5));
+  
+      svg.append("text")
+          .attr("x", width / 2)
+          .attr("y", 25)
+          .attr("text-anchor", "middle")
+          .style("font-size", Math.max(12, Math.min(20, width / 40)) + "px")
+          .style("font-weight", "bold")
+          .text("The top 5 UK goods imports from US");
+  
+          svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", height - 20)
+    .attr("text-anchor", "left")
+    .style("font-size", Math.max(10, Math.min(12, width / 70)) + "px")
+    .style("fill", "black")
+    .text("£ Billions");
+  
+          svg.append("text")
+    .attr("x", width / 2)              
+    .attr("y", height - 5)             
+    .attr("text-anchor", "left")     
+    .style("font-size", Math.max(10, Math.min(12, width / 70)) + "px")  
+    .style("fill", "black")
+    .text("Data Source: The Office for National Statistics (ONS)");
+  }
+  
+ 
+  window.addEventListener("resize", () => {
+      if (importsData) drawImportsChart(importsData);
+  });
+  </script>
+
+  <script>
+
+const data = [
+    { Date: "Dec-21", InterestRate: 0.25, Inflation: 5.4 },
+    { Date: "Feb-22", InterestRate: 0.5, Inflation: 6.2 },
+    { Date: "Mar-22", InterestRate: 0.75, Inflation: 7 },
+    { Date: "May-22", InterestRate: 1, Inflation: 9.1 },
+    { Date: "Jun-22", InterestRate: 1.25, Inflation: 9.4 },
+    { Date: "Aug-22", InterestRate: 1.75, Inflation: 9.9 },
+    { Date: "Sep-22", InterestRate: 2.25, Inflation: 11.1 },
+    { Date: "Nov-22", InterestRate: 3, Inflation: 10.7 },
+    { Date: "Dec-22", InterestRate: 3.5, Inflation: 10.5 },
+    { Date: "Feb-23", InterestRate: 4, Inflation: 10.4 },
+    { Date: "Mar-23", InterestRate: 4.25, Inflation: 10.1 },
+    { Date: "May-23", InterestRate: 4.5, Inflation: 8.7 },
+    { Date: "Jun-23", InterestRate: 5, Inflation: 7.9 },
+    { Date: "Aug-23", InterestRate: 5.25, Inflation: 6.7 },
+    { Date: "Aug-24", InterestRate: 5, Inflation: 2.2 },
+    { Date: "Nov-24", InterestRate: 4.75, Inflation: 2.6 },
+    { Date: "Feb-25", InterestRate: 4.5, Inflation: 2.8 }
+];
+
+const parseTime = d3.timeParse("%b-%y");
+
+data.forEach(d => d.Date = parseTime(d.Date));
+
+function drawChart() {
+    const container = d3.select("#chart");
+    container.selectAll("*").remove(); 
+
+    const width = container.node().clientWidth;
+    const height = container.node().clientHeight;
+
+    const margin = { top: 60, right: 50, bottom: 80, left: 60 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+
+    const svg = container.append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("display", "block")
+        .style("margin", "0 auto")
+      .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const xScale = d3.scaleTime()
+        .domain(d3.extent(data, d => d.Date))
+        .range([0, innerWidth]);
+
+    const yMax = d3.max(data, d => Math.max(d.InterestRate, d.Inflation));
+    const yScale = d3.scaleLinear()
+        .domain([0, yMax])
+        .nice()
+        .range([innerHeight, 0]);
+
+    const lineInterestRate = d3.line()
+        .x(d => xScale(d.Date))
+        .y(d => yScale(d.InterestRate));
+
+    const lineInflation = d3.line()
+        .x(d => xScale(d.Date))
+        .y(d => yScale(d.Inflation));
+
+    svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "#1f77b4") 
+        .attr("stroke-width", 3)
+        .attr("d", lineInterestRate);
+
+    svg.append("path")
+        .datum(data)
+        .attr("fill", "none")
+        .attr("stroke", "#ff7f0e") 
+        .attr("stroke-width", 3)
+        .attr("d", lineInflation);
+
+    const midIndex = Math.floor(data.length / 2); 
+    const midDate = data[midIndex].Date;
+    svg.append("text")
+        .attr("x", xScale(midDate))
+        .attr("y", yScale(data[midIndex].InterestRate) - 15)
+        .attr("text-anchor", "middle")
+        .style("font-size", Math.max(10, Math.min(14, width/60)) + "px")
+        .style("fill", "#1f77b4")
+        .text("Interest Rate");
+
+    svg.append("text")
+        .attr("x", xScale(midDate))
+        .attr("y", yScale(data[midIndex].Inflation) - 15)
+        .attr("text-anchor", "middle")
+        .style("font-size", Math.max(10, Math.min(14, width/60)) + "px")
+        .style("fill", "#ff7f0e")
+        .text("Inflation");
+
+    
+    const last = data[data.length - 1];
+    svg.append("text")
+        .attr("x", xScale(last.Date))
+        .attr("y", yScale(last.InterestRate) - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", Math.max(10, Math.min(12, width/70)) + "px")
+        .style("fill", "#1f77b4")
+        .text(`${last.InterestRate.toFixed(2)}%`);
+
+    svg.append("text")
+        .attr("x", xScale(last.Date))
+        .attr("y", yScale(last.Inflation) - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", Math.max(10, Math.min(12, width/70)) + "px")
+        .style("fill", "#ff7f0e")
+        .text(`${last.Inflation.toFixed(2)}%`);
+
+  
+    svg.append("g")
+        .attr("transform", `translate(0,${innerHeight})`)
+        .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat("%Y")).ticks(d3.timeYear.every(1)))
+        .selectAll("text")
+        .style("text-anchor", "middle")
+        .style("font-size", Math.max(10, Math.min(12, width/70)) + "px");
+
+    svg.append("g")
+        .call(d3.axisLeft(yScale).ticks(8))
+        .selectAll("text")
+        .style("font-size", Math.max(10, Math.min(12, width/70)) + "px");
+
+
+    svg.append("g")
+        .attr("class", "y-grid")
+        .selectAll("line")
+        .data(yScale.ticks(8))
+        .enter().append("line")
+        .attr("x1", 0)
+        .attr("x2", innerWidth)
+        .attr("y1", d => yScale(d))
+        .attr("y2", d => yScale(d))
+        .attr("stroke", "#ddd")
+        .attr("stroke-width", 1)
+        .attr("stroke-opacity", 0.6);
+
+        svg.append("text")
+    .attr("x", innerWidth / 2)   
+    .attr("y", -20)
+    .attr("text-anchor", "middle")   
+    .style("font-size", Math.max(16, Math.min(24, width/40)) + "px")
+    .style("font-weight", "bold")
+    .text("UK Interest and Inflation Rates Since 2022");
+
+
+svg.append("text")
+    .attr("x", 0)   
+    .attr("y", innerHeight + 50)
+    .attr("text-anchor", "start")
+    .style("font-size", Math.max(10, Math.min(12, width/70)) + "px")
+    .style("fill", "#555")
+    .text("Source: Bank of England");
+
+svg.append("text")
+    .attr("x", 0)   
+    .attr("y", innerHeight + 65)
+    .attr("text-anchor", "start")
+    .style("font-size", Math.max(10, Math.min(12, width/70)) + "px")
+    .style("fill", "black")
+    .text("Data Sources: The Office for National Statistics (ONS), Bank of England");
+}
+
+drawChart();
+window.addEventListener("resize", drawChart);
+</script>
+
+
+
+</body>
+
+</html>

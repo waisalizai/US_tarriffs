@@ -1,4 +1,4 @@
-# Global Inflation & Trade Wars Analysis
+# Global Inflation and Trade Wars Analysis
 ## Overview
 This project, submitted to Sandbox programme at the Goldsmiths, University of London on 9 April 2025, analyses the global economic impact of US trade tariffs under President Trump, focusing on inflation, UK exports, and monetary policy responses. The study includes data visualisations and forecasts to illustrate effects on key industries.
 ## Motivation

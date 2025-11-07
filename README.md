@@ -36,6 +36,6 @@ Understanding the consequences of trade conflicts is crucial for policymakers, b
  
 ## Credits
 
-- Created by [Wais Ahmad Alizai]  
+- Created by Wais Ahmad Alizai  
 - Data visualisations powered by D3.js  
 - Sources: BBC, Financial Times, OECD, ONS 

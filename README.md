@@ -38,4 +38,7 @@ Understanding the consequences of trade conflicts is crucial for policymakers, b
 
 - Created by Wais Ahmad Alizai  
 - Data visualisations powered by D3.js  
-- Sources: BBC, Financial Times, OECD, ONS 
+- Sources: BBC, Financial Times, OECD, ONS
+
+## Link: 
+- https://waisalizai.github.io/US_tarriffs/ 
